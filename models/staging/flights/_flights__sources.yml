@@ -1,0 +1,39 @@
+sources:
+  - name: demo_src
+    description: Данные из БД авиаперелётов
+    database: dwh_flights
+    schema: demo_src
+    tables:
+      - name: aircrafts
+        description: Модели самолётов
+        columns:
+          - name: aircraft_code
+            description: Код модели самолёта
+          - name: model
+            description: Назавние модели самолёта
+          - name: "range"
+      - name: airports
+        description: Аэропорты
+      - name: seats
+        description: Места в самолётах
+      - name: aircrafts_data
+      - name: airports_data
+      - name: boarding_passes
+      - name: bookings
+        freshness:
+          warn_after:
+            count: 6
+            period: hour
+          error_after:
+            count: 1
+            period: day
+          filter: current_timestamp::date - book_date::date < 3
+        loaded_at_field: book_date::timestamp
+      - name: flights
+      - name: flights_v
+      - name: routes
+      - name: ticket_flights
+      - name: tickets
+
+
+
